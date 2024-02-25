@@ -6,6 +6,7 @@ from langchain_community.utilities import GoogleSearchAPIWrapper
 from flask import Flask, Blueprint, request
 
 app = Flask(__name__)
+CORS(app, origins="*")
 
 load_dotenv()
 
@@ -18,11 +19,7 @@ def hello_world():
     return "<p>Hello, World!</p>"
 
 
-bp = Blueprint("google_search", __name__)
-CORS(bp, origins="*")
-
-
-@bp.route("/google", methods=("GET", "POST"))
+@app.route("/google")
 def google():
     google_search = GoogleSearchAPIWrapper()
 
