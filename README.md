@@ -43,10 +43,11 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 
 The Flask server will be running on [http://127.0.0.1:5328](http://127.0.0.1:5328) – feel free to change the port in `package.json` (you'll also need to update it in `next.config.js`).
 
+<br/><br/>
 
 # Mechaneyes
 
-## From Flask Tutorial
+## From the Flask Tutorial
 
 ### Blueprints and Views
 

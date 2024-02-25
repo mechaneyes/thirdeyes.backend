@@ -1,5 +1,6 @@
 import os
 from dotenv import load_dotenv
+from flask_cors import CORS
 from langchain.tools import Tool
 from langchain_community.utilities import GoogleSearchAPIWrapper
 
@@ -9,13 +10,14 @@ os.environ["GOOGLE_CSE_ID"] = os.getenv("GOOGLE_CSE_ID")
 os.environ["GOOGLE_API_KEY"] = os.getenv("GOOGLE_API_KEY")
 
 from flask import (
-    Blueprint
+    Blueprint, request
 )
 
-bp = Blueprint('google_search', __name__, url_prefix='/google-search')
+bp = Blueprint('google_search', __name__, url_prefix='/modules')
+CORS(bp)
 
-@bp.route('/search')
-def search():
+@bp.route('/google', methods=('GET', 'POST'))
+def google():
     google_search = GoogleSearchAPIWrapper()
 
     def top5_results(query):
@@ -28,7 +30,11 @@ def search():
         func=top5_results,
     )
 
-    result = tool.run("What is House music?")
+    # result = tool.run("What is House music?")
+    # form_input = request.args.get('form-input', '')
+    result = tool.run(request.args.get('form-input', ''))
 
-    return result
-    return f'Hello, google_search! {result}'
+    # return f'You submitted: {result}'
+
+    # return result
+    return tool.run(request.args.get('form-input', ''))
