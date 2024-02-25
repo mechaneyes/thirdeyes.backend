@@ -6,7 +6,7 @@ from langchain_community.utilities import GoogleSearchAPIWrapper
 from flask import Flask, Blueprint, request
 
 app = Flask(__name__)
-CORS(app, origins="*")
+CORS(app, resources={r"/*": {"origins": "*"}})
 
 load_dotenv()
 
@@ -21,6 +21,7 @@ def hello_world():
 
 @app.route("/google")
 def google():
+    # return "<p>You've reached the /google route!</p>"
     google_search = GoogleSearchAPIWrapper()
 
     def top5_results(query):
@@ -39,6 +40,5 @@ def google():
 
     # form_input = request.args.get('form-input', '')
     # result = tool.run(request.args.get("form-input", ""))
-
-    # return result
+    return result
     return tool.run(request.args.get("form-input", ""))
