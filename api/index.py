@@ -19,9 +19,14 @@ def hello_world():
     return "<p>Hello, World!</p>"
 
 
+@app.route("/beep")
+def beep_world():
+    return "<p>beep, World!</p>"
+
+
 @app.route("/google")
-def google():
-    # return "<p>You've reached the /google route!</p>"
+def hello_google():
+    return "<p>You've reached the /google route!</p>"
     google_search = GoogleSearchAPIWrapper()
 
     def top5_results(query):
