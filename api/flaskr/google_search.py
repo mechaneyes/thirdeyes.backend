@@ -14,7 +14,7 @@ from flask import (
 )
 
 bp = Blueprint('google_search', __name__, url_prefix='/modules')
-CORS(bp)
+CORS(bp, origins="*")
 
 @bp.route('/google', methods=('GET', 'POST'))
 def google():
