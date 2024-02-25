@@ -33,12 +33,12 @@ def google():
     )
 
     result = tool.run("What is House music?")
-    return result
+    print(result)
+
+    # return result
 
     # form_input = request.args.get('form-input', '')
-    result = tool.run(request.args.get("form-input", ""))
-
-    # return f'You submitted: {result}'
+    # result = tool.run(request.args.get("form-input", ""))
 
     # return result
     return tool.run(request.args.get("form-input", ""))
