@@ -47,6 +47,12 @@ The Flask server will be running on [http://127.0.0.1:5328](http://127.0.0.1:532
 
 # Mechaneyes
 
+## Running Flask Server
+
+```bash
+FLASK_DEBUG=1 pip3 install -r requirements.txt && python3 -m flask --app api/flaskr --debug run -p 5328
+```
+
 ## From the Flask Tutorial
 
 ### Blueprints and Views
