@@ -39,10 +39,6 @@ yarn dev
 pnpm dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-The Flask server will be running on [http://127.0.0.1:5328](http://127.0.0.1:5328) – feel free to change the port in `package.json` (you'll also need to update it in `next.config.js`).
-
 <br/><br/>
 
 # Mechaneyes
@@ -52,6 +48,23 @@ The Flask server will be running on [http://127.0.0.1:5328](http://127.0.0.1:532
 ```bash
 FLASK_DEBUG=1 pip3 install -r requirements.txt && python3 -m flask --app api/flaskr --debug run -p 5328
 ```
+
+The Flask server will be running on [http://127.0.0.1:5328](http://127.0.0.1:5328)
+
+If your Flask application is defined in the index.py file, and it's located in the api directory, you should set the FLASK_APP environment variable to api.index and then run the flask run command. Here's how you can do it:
+
+```bash
+export FLASK_APP=api.index
+export FLASK_ENV=development
+flask --debug  run -p 5328
+```
+
+Or as a single command:
+
+```bash
+export FLASK_APP=api.index; export FLASK_ENV=development; flask run -p 5328
+```
+
 
 ## From the Flask Tutorial
 
