@@ -31,13 +31,16 @@ def hello_google():
     # return "<p>You've reached the /google route!</p>"
     google_search = GoogleSearchAPIWrapper()
 
+    def top_results(query):
+        return google_search.results(query, 4)
+    
     def top5_results(query):
         return google_search.results(query, 5)
 
     tool = Tool(
         name="Google Search Snippets",
         description="Search Google for recent results.",
-        func=top5_results,
+        func=top_results,
     )
 
     result = tool.run("What is House music?")
