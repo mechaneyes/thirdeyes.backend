@@ -6,6 +6,7 @@ from langchain.tools import Tool
 from langchain_community.utilities import GoogleSearchAPIWrapper
 from flask import Flask, Blueprint, request, jsonify
 from lib.artist_identifier import identify_artists
+from lib.spotify_artist_deets_getter import spotify_get_artist_deets
 
 app = Flask(__name__)
 
@@ -68,4 +69,40 @@ def identify():
         raise ValueError("The response is not in valid JSON format.")
 
     print('datadata:', data.artists)
+    return jsonify(data)
+    
+# // ————————————————————————————————————o————————————————————————————————————o spotify -->
+# // ————————————————————————————————————o get spotify deets —>
+# 
+@app.route("/spotify-deets", methods=['GET'])
+def spotify():
+    form_input = request.args.get("form-input", "")
+    print(form_input)
+
+    # identified = identify_artists(form_input)
+
+    try:
+        response = identify_artists(form_input)
+        
+        print(response)
+        
+        if isinstance(response, dict):
+            data = response
+        else:
+            data = json.loads(response)
+    except json.JSONDecodeError:
+        raise ValueError("The response is not in valid JSON format.")
+
+    
+    print('datadata:', data['artists'])
+
+    artists_string = ', '.join(data['artists'])
+    # print('artists_string:', artists_string)
+
+    # spotify_get_artist_deets(data.artists[0])
+    artist_deets = spotify_get_artist_deets(artists_string)
+    print('artist_deets:', artist_deets)
+
+    return artist_deets
+
     return jsonify(data)

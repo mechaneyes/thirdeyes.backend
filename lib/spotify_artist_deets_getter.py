@@ -55,14 +55,28 @@ def spotify_get_artist_deets(artist_name):
         artist_info = get_artist_info(access_token, artist_name)
         artist_id = artist_info['id']
         print(f"\nArtist Name: {artist_info['name']}")
-
+    
         # Get the artist's top 5 tracks
         top_tracks = get_artist_top_tracks(access_token, artist_id)
         print("\nTop 5 Tracks:")
-        for track in top_tracks:
+    
+        tracks_details = []
+        for i, track in enumerate(top_tracks):
+            if i >= 5:  # Stop after 5 tracks
+                break
+    
             print(f"Track: {track['name']}")
             print(f"Album: {track['album']['name']}")
             print(f"Spotify Link: {track['external_urls']['spotify']}\n")
-
+    
+            details = {
+                "Track": track['name'],
+                "Album": track['album']['name'],
+                "Spotify Link": track['external_urls']['spotify']
+            }
+            tracks_details.append(details)
+    
+        return tracks_details
+    
     except Exception as e:
         print(f"An error occurred: {e}\n")
