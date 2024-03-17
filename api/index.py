@@ -42,22 +42,22 @@ def hello_google():
 
     return tool.run(request.args.get("form-input", ""))
 
-@app.route("/artist-match", methods=['GET'])
-def match_artists_route():
-    form_input = request.args.get("form-input", "")
-    print(form_input)
+# @app.route("/artist-match", methods=['GET'])
+# def match_artists_route():
+#     form_input = request.args.get("form-input", "")
+#     print(form_input)
 
-    matches = match_artists(form_input)
-    print(matches)
+#     matches = match_artists(form_input)
+#     print(matches)
 
-    return jsonify(matches)
+#     return jsonify(matches)
     
 @app.route("/identify-artists", methods=['GET'])
-def identify_artists():
+def identify():
     form_input = request.args.get("form-input", "")
     print(form_input)
 
-    identified = match_artists(form_input)
+    identified = identify_artists(form_input)
     print(identified)
 
     return jsonify(identified)
