@@ -1,4 +1,5 @@
 import os
+import json
 from dotenv import load_dotenv
 from flask_cors import CORS
 from langchain.tools import Tool
@@ -57,7 +58,19 @@ def identify():
     form_input = request.args.get("form-input", "")
     print(form_input)
 
-    identified = identify_artists(form_input)
-    print(identified)
+    # identified = identify_artists(form_input)
 
-    return jsonify(identified)
+    try:
+        response = identify_artists(form_input)
+        
+        print(response)
+        
+        if isinstance(response, dict):
+            data = response
+        else:
+            data = json.loads(response)
+    except json.JSONDecodeError:
+        raise ValueError("The response is not in valid JSON format.")
+
+
+    return jsonify(data)
