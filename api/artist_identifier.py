@@ -25,34 +25,30 @@ def identify_artists(query):
     They can be a musician, band, producer, DJ, etc.
 
     If there is a music artist name in the prompt, return the name or names of the
-    artists in your response in JSON format. The key should be "artist" and the value
-    should be the name of the artist in quotes.
+    artists in your response in JSON format. Give me a dictionary with the key 
+    "artists" associated with a list of artist names.
+    
 
     query: <<<{query}>>>
     answer: """
 
-    prompt = PromptTemplate(
-        input_variables=["query"], template=template
-    )
+    prompt = PromptTemplate(input_variables=["query"], template=template)
     llmchain = LLMChain(llm=llm, prompt=prompt)
     raw_output = llmchain.invoke({"query": query})
 
-    # Extract and parse the JSON from the response
-    try:
-        # Extract the 'text' field from the raw_output
-        json_string = raw_output["text"]
+    output = raw_output["text"]
+    output = output.strip()  # Remove leading and trailing whitespace
+    
+    # Remove the Markdown formatting
+    if output.startswith("```json"):
+        output = output[7:]
+    if output.endswith("```"):
+        output = output[:-3]
 
-        # Parse the JSON string into a dictionary
-        result = json.loads(json_string)
+    print(output)
 
-        if 'artist' in result:
-            print("\n\n # ————————————————————————————————————o identify_artists —> \n")
-            print(result)
-            return result
-        else:
-            raise ValueError("Artist key not found in the response JSON.")
-    except json.JSONDecodeError:
-        raise ValueError("The response is not in valid JSON format.")
+    return output
 
-# Example usage:
-# identify_artists("The query for the AI would be mentioning Bonobo in some context.")
+
+# Testing usage:
+# identify_artists("The query for the AI would be mentioning Brian Eno and david byrne.")
