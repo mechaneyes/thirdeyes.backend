@@ -5,8 +5,7 @@ from flask_cors import CORS
 from langchain.tools import Tool
 from langchain_community.utilities import GoogleSearchAPIWrapper
 from flask import Flask, Blueprint, request, jsonify
-from api.artist_matcher import match_artists
-from api.artist_identifier import identify_artists
+from lib.artist_identifier import identify_artists
 
 app = Flask(__name__)
 
@@ -18,6 +17,9 @@ load_dotenv()
 os.environ["GOOGLE_CSE_ID"] = os.getenv("GOOGLE_CSE_ID")
 os.environ["GOOGLE_API_KEY"] = os.getenv("GOOGLE_API_KEY")
 
+# // ————————————————————————————————————o————————————————————————————————————o google -->
+# // ————————————————————————————————————o get google results —>
+# 
 @app.route("/google")
 def hello_google():
     # return "<p>You've reached the /google route!</p>"
@@ -43,16 +45,9 @@ def hello_google():
 
     return tool.run(request.args.get("form-input", ""))
 
-# @app.route("/artist-match", methods=['GET'])
-# def match_artists_route():
-#     form_input = request.args.get("form-input", "")
-#     print(form_input)
-
-#     matches = match_artists(form_input)
-#     print(matches)
-
-#     return jsonify(matches)
-    
+# // ————————————————————————————————————o————————————————————————————————————o identify -->
+# // ————————————————————————————————————o identify artists in prompt —>
+# 
 @app.route("/identify-artists", methods=['GET'])
 def identify():
     form_input = request.args.get("form-input", "")
@@ -72,5 +67,5 @@ def identify():
     except json.JSONDecodeError:
         raise ValueError("The response is not in valid JSON format.")
 
-
+    print('datadata:', data.artists)
     return jsonify(data)

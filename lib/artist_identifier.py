@@ -1,4 +1,5 @@
 import os
+import json
 from dotenv import load_dotenv
 from langchain_openai import ChatOpenAI
 from langchain.chains import LLMChain
@@ -44,10 +45,12 @@ def identify_artists(query):
     if output.endswith("```"):
         output = output[:-3]
 
-    print(output)
+    output_dict = json.loads(output)
+    print('output:', output_dict['artists'][0])
 
+    # return output_dict['artists'][0]
     return output
 
 
 # Testing usage:
-# identify_artists("The query for the AI would be mentioning Brian Eno and david byrne.")
+# identify_artists("The query for the AI would be mentioning Brian Eno.")
