@@ -59,10 +59,10 @@ export FLASK_ENV=development
 flask --debug  run -p 5328
 ```
 
-Or as a single command:
+Or as a single command (here running with reloader):
 
 ```bash
-export FLASK_APP=api.index; export FLASK_ENV=development; flask run -p 5328
+export FLASK_APP=api.index; export FLASK_ENV=development; export FLASK_DEBUG=1; flask run -p 5328
 ```
 
 

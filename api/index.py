@@ -3,7 +3,9 @@ from dotenv import load_dotenv
 from flask_cors import CORS
 from langchain.tools import Tool
 from langchain_community.utilities import GoogleSearchAPIWrapper
-from flask import Flask, Blueprint, request
+from flask import Flask, Blueprint, request, jsonify
+from api.artist_matcher import match_artists
+from api.artist_identifier import identify_artists
 
 app = Flask(__name__)
 
@@ -14,17 +16,6 @@ load_dotenv()
 
 os.environ["GOOGLE_CSE_ID"] = os.getenv("GOOGLE_CSE_ID")
 os.environ["GOOGLE_API_KEY"] = os.getenv("GOOGLE_API_KEY")
-
-
-@app.route("/hello")
-def hello_world():
-    return "<p>Hello, World!</p>"
-
-
-@app.route("/beep")
-def beep_world():
-    return "<p>beep, World!</p>"
-
 
 @app.route("/google")
 def hello_google():
@@ -48,4 +39,25 @@ def hello_google():
 
     # form_input = request.args.get('form-input', '')
     # result = tool.run(request.args.get("form-input", ""))
+
     return tool.run(request.args.get("form-input", ""))
+
+@app.route("/artist-match", methods=['GET'])
+def match_artists_route():
+    form_input = request.args.get("form-input", "")
+    print(form_input)
+
+    matches = match_artists(form_input)
+    print(matches)
+
+    return jsonify(matches)
+    
+@app.route("/identify-artists", methods=['GET'])
+def identify_artists():
+    form_input = request.args.get("form-input", "")
+    print(form_input)
+
+    identified = match_artists(form_input)
+    print(identified)
+
+    return jsonify(identified)
