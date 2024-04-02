@@ -68,7 +68,7 @@ def identify():
     except json.JSONDecodeError:
         raise ValueError("The response is not in valid JSON format.")
 
-    print('datadata:', data.artists)
+    print('datadata:', data)
     return jsonify(data)
     
 # // ————————————————————————————————————o————————————————————————————————————o spotify -->
