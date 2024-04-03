@@ -4,9 +4,5 @@ google-api-python-client>=2.100.0
 langchain==0.1.9
 langchain-community==0.0.24
 langchain-openai==0.0.8
-numpy==1.24.3
 openai==1.14.1
 python-dotenv==1.0.1
-spacy==3.7.4
-urllib3==1.26.6
-werkzeug==3.0.1
